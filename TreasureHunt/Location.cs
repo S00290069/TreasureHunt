@@ -6,17 +6,42 @@ using System.Threading.Tasks;
 
 namespace TreasureHunt
 {
-    internal class Location
+    internal abstract class Location
     {
         public string Name { get; private set; }
         public Clue Clue { get; private set; }
         public Treasure Treasure { get; private set; }
+
+        private Dictionary<string, Location> exits = new Dictionary<string, Location>();
 
         public Location(string name, Clue clue, Treasure treasure)
         {
             Name = name;
             Clue = clue;
             Treasure = treasure;
+        }
+
+        public abstract string Describe();
+
+        public virtual string OnArrive()
+        {
+            return $"You have arrived at {Name}.";
+        }
+
+        public void AddExit(string direction, Location location)
+        {
+            exits.Add(direction.ToLower(), location);
+        }
+
+        public Location FindExit(string direction)
+        {
+            Location location;
+
+            if (exits.TryGetValue(direction.ToLower(), out location))
+            {
+                return location;
+            }
+            return null;
         }
     }
 }

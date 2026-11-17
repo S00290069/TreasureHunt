@@ -23,7 +23,7 @@ namespace TreasureHunt
                 "An ancient tome containing the wisdom of generations of students.",
                 10);
 
-            Location library = new Location("Library", libraryClue, libraryTreasure);
+            Location library = new Library(libraryClue, libraryTreasure);
 
             //COMPUTER LAB
             Clue computerClue = new Clue(
@@ -36,7 +36,7 @@ namespace TreasureHunt
                 "A mysterious ring that allows its wearer to move objects with their mind.",
                 15);
 
-            Location computerLab = new Location("Computer Lab", computerClue, computerTreasure);
+            Location computerLab = new ComputerLab(computerClue, computerTreasure);
 
             //CANTEEN
             Clue canteenClue = new Clue(
@@ -49,7 +49,7 @@ namespace TreasureHunt
                 "A magical potion that instantly restores the drinker's energy.",
                 10);
 
-            Location canteent = new Location("Canteen", canteenClue, canteenTreasure);
+            Location canteen = new Canteen(canteenClue, canteenTreasure);
 
             //STUDENT UNION
             Clue unionClue = new Clue(
@@ -62,39 +62,105 @@ namespace TreasureHunt
                 "A mysterious orb that reveals glimpses of the future, although its answers aren't always reliable.",
                 20);
 
-            Location studentUnion = new Location("Student Union", unionClue, unionTreasure);
+            Location studentUnion = new StudentUnion(unionClue, unionTreasure);
 
-            //OUTPUT
-            Console.WriteLine("Welcome to the ATU Treasure Hunt!");
+            //Connecting locations
+            library.AddExit("east", computerLab);
+            computerLab.AddExit("west", library);
+
+            computerLab.AddExit("south", canteen);
+            canteen.AddExit("north", computerLab);
+
+            canteen.AddExit("west", studentUnion);
+            studentUnion.AddExit("east", canteen);
+
+            //Starting point
+            player.CurrentLocation = library;
+            Console.WriteLine("Welcome to the great ATU Treasure Hunt!");
             Console.WriteLine();
 
-            Console.WriteLine($"Location: {library.Name}");
-            Console.WriteLine(library.Clue.Question);
+            Console.WriteLine(player.CurrentLocation.OnArrive());
+            Console.WriteLine(player.CurrentLocation.Describe());
 
-            if (library.Clue.TryAnswer("Magazine"))
+            //Incorrect answer test
+            if (library.Clue.TryAnswer("Phone"))
             {
-                player.AddTreasure(libraryTreasure);
+                player.AddTreasure(library.Treasure);
             }
             else
             {
                 Console.WriteLine("Incorrect!");
             }
 
+            //Correct answer test
             if (library.Clue.TryAnswer("Book"))
             {
                 Console.WriteLine("Correct!");
-                player.AddTreasure(libraryTreasure);
+                player.AddTreasure(library.Treasure);
             }
 
             Console.WriteLine();
 
-            Console.WriteLine($"Location: {computerLab.Name}");
-            Console.WriteLine(computerLab.Clue.Question);
+            //Moving to computer lab
+            Location nextLocation = player.CurrentLocation.FindExit("east");
 
-            if (computerLab.Clue.TryAnswer("Mouse"))
+            if (nextLocation != null)
             {
-                Console.WriteLine("Correct!");
-                player.AddTreasure(computerLab.Treasure);
+                player.CurrentLocation = nextLocation;
+                Console.WriteLine(player.CurrentLocation.OnArrive());
+                Console.WriteLine(player.CurrentLocation.Describe());
+            }
+            else
+            {
+                Console.WriteLine("You can't go that way!");
+            }
+
+            Console.WriteLine();
+
+            //Direction that doesn't exist
+            nextLocation = player.CurrentLocation.FindExit("north");
+
+            if (nextLocation != null)
+            {
+                player.CurrentLocation = nextLocation;
+                Console.WriteLine(player.CurrentLocation.OnArrive());
+                Console.WriteLine(player.CurrentLocation.Describe());
+            }
+            else
+            {
+                Console.WriteLine("You can't go that way!");
+            }
+
+            Console.WriteLine();
+
+            //Moving to canteen
+            nextLocation = player.CurrentLocation.FindExit("south");
+
+            if (nextLocation != null)
+            {
+                player.CurrentLocation = nextLocation;
+                Console.WriteLine(player.CurrentLocation.OnArrive());
+                Console.WriteLine(player.CurrentLocation.Describe());
+            }
+            else
+            {
+                Console.WriteLine("You can't go that way!");
+            }
+
+            Console.WriteLine();
+
+            //Moving to student union
+            nextLocation = player.CurrentLocation.FindExit("west");
+
+            if (nextLocation != null)
+            {
+                player.CurrentLocation = nextLocation;
+                Console.WriteLine(player.CurrentLocation.OnArrive());
+                Console.WriteLine(player.CurrentLocation.Describe());
+            }
+            else
+            {
+                Console.WriteLine("You can't go that way!");
             }
 
             Console.WriteLine();

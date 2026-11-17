@@ -11,6 +11,7 @@ namespace TreasureHunt
         private List<Treasure> treasures = new List<Treasure>();
 
         public string Name { get; private set; }
+        public Location CurrentLocation { get; set; }
 
         public int TreasureCount
         {

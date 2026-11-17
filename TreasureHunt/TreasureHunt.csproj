@@ -43,11 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Canteen.cs" />
     <Compile Include="Clue.cs" />
+    <Compile Include="ComputerLab.cs" />
+    <Compile Include="Library.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StudentUnion.cs" />
     <Compile Include="Treasure.cs" />
   </ItemGroup>
   <ItemGroup>
