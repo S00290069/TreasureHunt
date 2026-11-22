@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace TreasureHunt
             exits.Add(direction.ToLower(), location);
         }
 
+        //Find the location in a chosen direction
         public Location FindExit(string direction)
         {
             Location location;
@@ -42,6 +44,24 @@ namespace TreasureHunt
                 return location;
             }
             return null;
+        }
+
+        public void ShowExits()
+        {
+            Console.Write("Exits - ");
+
+            string[] directions = { "north", "south", "east", "west" };
+
+            foreach (string direction in directions)
+            {
+                Location location = FindExit(direction);
+
+                if (location != null)
+                {
+                    Console.Write($"{direction}: {location.Name}    ");
+                }
+            }
+            Console.WriteLine();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace TreasureHunt
         public string Question { get; private set; }
         public string Hint { get; private set; }
 
+        public bool HintUsed { get; private set; }
+
         private string answer;
 
         public Clue(string question, string hint, string answer)
@@ -28,6 +30,11 @@ namespace TreasureHunt
                 return true;
             }
             return false;
+        }
+
+        public void UseHint()
+        {
+            HintUsed = true;
         }
     }
 }

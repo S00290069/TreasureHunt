@@ -21,14 +21,39 @@ namespace TreasureHunt
             }
         }
 
+        //Add up the total points for the collected treasures
+        public int Score
+        {
+            get
+            {
+                int score = 0;
+
+                foreach (Treasure treasure in treasures)
+                {
+                    score += treasure.Points;
+                }
+                return score;
+            }
+        }
+
         public Player(string name)
         {
             Name = name;
         }
 
-        public void AddTreasure(Treasure treasure)
+        public void AddTreasure(Treasure treasure, bool hintUsed)
         {
             treasures.Add(treasure);
+
+            if (hintUsed)
+            {
+                treasure.UseHintPenalty();
+            }
+        }
+
+        public bool HasTreasure(Treasure treasure)
+        {
+            return treasures.Contains(treasure);
         }
 
         public void ShowTreasures()

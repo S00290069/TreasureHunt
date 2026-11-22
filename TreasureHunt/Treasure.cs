@@ -25,5 +25,10 @@ namespace TreasureHunt
         {
             return $"{Name}: {Description} ({Points} points)";
         }
+
+        public void UseHintPenalty()
+        {
+            Points -= 5;
+        }
     }
 }
